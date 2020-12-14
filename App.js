@@ -1,23 +1,25 @@
 import React, {useState} from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, ScrollView, SectionList, Button, StatusBar} from 'react-native';
-import logo from './assets/LaJollaCucumbers.jpg';
-import wee from './assets/wee.jpg';
-import coutts from './assets/Coutts.png';
-import lamar from './assets/lamar.png';
-import duy from './assets/duy.jpg';
-import brian from './assets/Brian_Bloom.png';
-import xander from './assets/xander.jpg';
-import Constants from 'expo-constants';
+import {coutts, xander, duy, lamar, brian, wee, logo} from './index';
 import {createAppContainer, createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import About from './About';
+import Seasons from './Seasons';
+import Constants from 'expo-constants';
 
 
 
-const PLAYERS = [
+const PLAYERS1 = [
   {
     title: 'Meet the Cucumbers',
-    data: [coutts, xander, duy, lamar, brian, wee]
+    data: [coutts, xander, duy]
+  },
+ 
+];
+const PLAYERS2 = [
+  {
+    title: 'Meet the Cucumbers',
+    data: [lamar, brian, wee]
   },
  
 ];
@@ -43,23 +45,8 @@ const PLAYERS = [
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
-  const names = ['coutts', 'xander', 'duy', 'lamar', 'brian', 'wee']
-
-  const [visibleStatusBar, setVisibleStatusBar] = useState(true);
-  const [styleStatusBar, setStyleStatusBar] = useState(names[0]);
-
-  const changeVisibilityStatusBar = () => {
-    setVisibleStatusBar(!visibleStatusBar);
-  };
-
-  const changeStyleStatusBar = () => {
-    const styleId = names.indexOf(styleStatusBar) + 1;
-
-    if (styleId === names.length) {
-      return setStyleStatusBar(names[0]);
-    }
-    return setStyleStatusBar(names[styleId]);
-  };
+  const names1 = ['coutts', 'xander', 'duy']
+  const names2 = ['lamar', 'brian', 'wee']
 
     const PressedCucumber = async (item) => {
       switch(item) {
@@ -88,25 +75,43 @@ function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
     
-      <Text style={styles.header}> La Jolla Cucumbers</Text>
-      
-      <SectionList
-      sections={PLAYERS} 
+      <Text style={styles.title}> Welcome to THE La Jolla Cucumbers</Text>
+      <View style={styles.banner}>
+      <Text style={styles.header}> What an honor for you to be blessed by visiting our page. Learn about the 
+      cucumbers and what makes us so legendary. Definetly keep track of what we are up to, you will
+      not want to miss any of it.</Text>
+      <View style={styles.item}>
+      <Text style={styles.meet}> Meet the Cucumbers</Text>
+      <SectionList 
+      horizontal
+      sections={PLAYERS1} 
       renderItem={({item, index}) =>
         <View style={styles.item}>
      <TouchableOpacity onPress={() => PressedCucumber(item)} >
     <Image style={styles.wee} source={item}/>
-    <Text style={styles.instructions}>{names[index]}</Text>
+    <Text style={styles.instructions}>{names1[index]}</Text>
     </TouchableOpacity>
   </View>
       } 
-      /*renderSectionHeader={({section}) => (
-        <Text style={styles.header}>
-          {section.title}
-        </Text>
-      )} */
       />
-       
+      <SectionList 
+      horizontal
+      sections={PLAYERS2} 
+      renderItem={({item, index}) =>
+        <View style={styles.item}>
+     <TouchableOpacity onPress={() => PressedCucumber(item)} >
+    <Image style={styles.wee} source={item}/>
+    <Text style={styles.instructions}>{names2[index]}</Text>
+    </TouchableOpacity>
+  </View>
+      } 
+      />
+       </View>
+       </View>
+
+       <Text style={styles.instructions}>Current Updates:</Text>
+       <Text style={styles.instructions}>Season cancelled due to COVID-19</Text>
+       <Text style={styles.instructions}>Watch us kill people at the park!</Text>
     </SafeAreaView>
   );
 }
@@ -116,7 +121,8 @@ export default function App(){
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen name="Seasons" component={Seasons} />
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="About" component={About} />
       </Tab.Navigator>
@@ -127,21 +133,12 @@ export default function App(){
 const styles = StyleSheet.create({
   container: {
     //flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     //justifyContent: 'center',
     marginTop: Constants.statusBarHeight,
-    backgroundImage:`url(${logo})` 
+
   },
-  scrollView: {
-    backgroundColor: 'pink',
-  },
-  pictures: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'left',
-    justifyContent: 'left',
-  },
+  
   logo: {
     width: 305,
     height: 250,
@@ -157,34 +154,35 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
-  button: {
-    backgroundColor: "blue",
-    padding: 20,	  
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  buttonText: {
-    fontSize: 20, 
-    color: '#fff',
-  },
-  thumbnail: {
-    width: 300,
-    height: 300,
-    resizeMode: "Contain"
+  meet: {
+    color: '#000',
+    fontSize: 36,
+    textAlign: 'center',
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 10,
-    marginVertical: 5,
+    backgroundColor: '#d478c6',
+    padding: 5,
+    marginVertical: 1,
   },
   header: {
-    fontSize: 32,
-    backgroundColor: '#f9c2ff',
-    paddingLeft: 250,
-    paddingRight: 250,
+    fontSize: 30,
+    color: '#151816',
+    textAlign: 'center',
+    width: '75%',
+    backgroundColor: '#fff'
+  },
+  banner: {
+    alignItems: 'center',
+    //justifyContent: 'center',
+    marginTop: Constants.statusBarHeight,
+    backgroundImage:`url(${logo})` 
   },
   title: {
-    fontSize: 24,
+    fontSize: 40,
+    backgroundColor: '#11ac1e',
+    color:'#fff',
+    alignSelf:'stretch',
+    textAlign: 'center',
   },
 	
 });
