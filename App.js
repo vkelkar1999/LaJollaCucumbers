@@ -1,10 +1,11 @@
+import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, ScrollView, SectionList, Button, StatusBar} from 'react-native';
 import {coutts, xander, duy, lamar, brian, wee, logo} from './index';
 import {createAppContainer, createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import About from './About';
-import Seasons from './Seasons';
+import tempSeason from './Seasons';
 import Constants from 'expo-constants';
 
 
@@ -122,7 +123,7 @@ export default function App(){
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">
-      <Tab.Screen name="Seasons" component={Seasons} />
+        <Tab.Screen name="Seasons" component={tempSeason} />
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="About" component={About} />
       </Tab.Navigator>

@@ -8,6 +8,7 @@ import xander from './assets/xander.jpg';
 import muir from './assets/muir.jpg';
 import rimac from './assets/rimac.jpg';
 import erc from './assets/erc.png';
+import giesel from './assets/giesel.jpg';
 
 export {
     logo,
@@ -19,5 +20,6 @@ export {
     xander,
     muir,
     rimac,
-    erc
+    erc,
+    giesel
 }

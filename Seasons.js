@@ -3,6 +3,9 @@ import {erc, rimac} from './index'
 import { ImageBackground, Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, ScrollView, SectionList, Button, StatusBar} from 'react-native';
 import Constants from 'expo-constants';
 import { setStatusBarHidden } from 'expo-status-bar';
+import words from './Words';
+import {NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator} from '@react-navigation/stack'
 
 const seasonButtons = [
   {
@@ -11,32 +14,36 @@ const seasonButtons = [
   },
 ];
 
-class Seasons extends React.Component {
-  onButtonClickHandler = (item) => {
+const Stack = createStackNavigator();
+
+const HomeScreen = () => {
+  return (
+    <Text style={styles.instructions}> Hello World</Text>
+  );
+};
+
+function Seasons({navigation}) {
+ /* onButtonClickHandler = (item) => {
     this.setState({showMessage: item});
   };
   state ={
     showMessage: true
-  };
+  }; */
 
-  PressedCucumber = async (item) => {
+  const PressedCucumber = async (item) => {
     switch(item) {
     case '2020':
-      this.onButtonClickHandler('2-3');
+      this.onButtonClickHandler(words('2020'));
       break;
     case '2019':
-      this.onButtonClickHandler('3-2');
+      this.onButtonClickHandler(words('2019'));
       break;
     case '2018':
-      this.onButtonClickHandler('5-0');
+      this.onButtonClickHandler(words('2018'));
       break;
     }
     return;
   };
-
-
-    render() {
-
       //const likedStyles = this.state.showMessage ? null : null;
       
         return (
@@ -47,14 +54,29 @@ class Seasons extends React.Component {
           horizontal
           sections={seasonButtons} 
           renderItem={({item, index}) =>
-        <Button style={styles.instructions} title={item} onPress={() => this.PressedCucumber(item)}/>
+        <Button style={styles.instructions} title={item} onPress={() => navigation.navigate('Details')}/>
           }
           />
-         <Text style={[styles.instructions, /*likedStyles*/]}> {this.state.showMessage}</Text>
+         <View style={[styles.instructions, /*likedStyles*/]}> Temp</View>
         </View>
       </ImageBackground>
     )
-  }
+  
+}
+
+function tempSeason() {
+  return (
+    <Stack.Navigator headerMode='none' initalRouteName="Season">
+      <Stack.Screen
+      name="Season"
+      component={Seasons}
+      />
+     <Stack.Screen
+      name="Details"
+      component={HomeScreen}
+      />
+    </Stack.Navigator>
+  )
 }
 const styles = StyleSheet.create({
     container: {
@@ -89,4 +111,4 @@ const styles = StyleSheet.create({
       marginVertical: 1,
     },
   });
-export default Seasons;
+  export default tempSeason;
